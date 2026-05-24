@@ -30,3 +30,26 @@ sig LoginAttempt {
     inputCred : one Credential,
     outcome   : one Result
 }
+
+pred login [u : User, c : Credential, s : Session] {
+    c = u.cred
+    s.owner = u
+    no s2 : Session | s2.owner = u and s2 != s
+}
+
+pred logout [u : User] {
+    no s : Session | s.owner = u
+}
+
+pred isAuthenticated [u : User] {
+    some s : Session | s.owner = u
+}
+
+pred validateCredential [u : User, c : Credential] {
+    u.cred = c
+}
+
+pred adminLogin [u : User, c : Credential, s : Session] {
+    u.role = Admin
+    login[u, c, s]
+}
