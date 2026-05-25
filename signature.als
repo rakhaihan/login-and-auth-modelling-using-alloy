@@ -5,6 +5,7 @@ sig Credential {
     uname  : one Username,
     passwd : one Password
 }
+
 sig User {
     cred : one Credential,
     role : one Role
